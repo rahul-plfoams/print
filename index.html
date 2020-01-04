@@ -10,60 +10,64 @@
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css'/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/JsBarcode.all.min.js'></script>
-    <style>
-        @page {
-  margin: 0;
-}
-    @media print{
-        input{
-            font-size: 50px;
-            color:red;
-        }
-        footer {
-    display: none;
-    position: fixed;
-    bottom: 0;
-  }
-  header {
-    display: none;
-    position: fixed;
-    top: 0;
-  }
-
-    }
-    </style>
+    
 </head>
 
 <body class="bg-primary">
     <div class="container-fluid " id="form">
 
-        <svg id="barcode" jsbarcode-format="upc"
-        jsbarcode-textmargin="0"
-        jsbarcode-fontoptions="bold"></svg>
+        <div id="printArea">
+
+        
+        
+        <table>
+            <tr>
+                <td colspan="2">
+                    <svg id="barcode" jsbarcode-format="upc"
+                    jsbarcode-textmargin="0"
+                    jsbarcode-fontoptions="bold"></svg>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>Seller</td>
+                <td id="selleroutput"></td>
+            </tr>
+            <tr>
+                <td>customer</td>
+                <td id="customeroutput"></td>
+            </tr>
+            <tr>
+                <td>hsn</td>
+                <td id="hsnoutput"></td>
+            </tr>
+        </table>
+
+    </div>
     
     <form action="" class="col-5 mx-auto m-5 " >
-        <input class="form-control m-4" type="text" name="" id="" placeholder="seller">
-        <input class="form-control m-4" type="text" name="" id="" placeholder="customer">
+        <input class="form-control m-4" type="text" name="" id="seller" placeholder="seller">
+        <input class="form-control m-4" type="text" name="" id="customer" placeholder="customer">
         <input class="form-control m-4" type="text" name="" id="product" placeholder="product">
-        <input class="form-control m-4" type="text" name="" id="" placeholder="hsn code">
-        <button class=" btn btn-danger" id="barcodeGen">Generate Barcode</button>
+        <input class="form-control m-4" type="text" name="" id="hsn" placeholder="hsn code">
+        <button class=" btn btn-danger" id="barcodeGen">Generate</button>
         
     </form>
     <button id="print" >Print</button>
 </div>
 <script>
-const submit=document.querySelector("#barcodeGen");
-const print=document.querySelector("#print");
-submit.addEventListener("click",(e)=>{
+const [barcode,selleroutput,customeroutput,hsnoutput,seller,customer,product,hsn,barcodeGen,print]=document.querySelectorAll("#barcode,#selleroutput,#customeroutput,#hsnoutput,#seller,#customer,#product,#hsn,#barcodeGen,#print");
+barcodeGen.addEventListener("click",(e)=>{
 e.preventDefault();
-    const value=document.querySelector("#product").value;
-    JsBarcode("#barcode", value);
+selleroutput.innerText=seller.value;
+customeroutput.innerText=customer.value;
+hsnoutput.innerText=hsn.value;
+    JsBarcode("#barcode", product.value);
 });
 
 print.addEventListener("click",()=>{
-    // e.preventDefault();
-    printJS({ printable: 'form', type: 'html', header: 'PrintJS - Form Element Selection',ignoreElements:["product"] ,
-    style:'.container-fluid{border:5px solid red;height:80vw;width:80vw;border-radius:12px;}'
+    printJS({ printable: 'printArea', type: 'html',
+    style:''
     });
 })
 </script>
