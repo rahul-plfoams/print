@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css'/>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/JsBarcode.all.min.js'></script>
+    <style>
+        @page {
+  margin: 0;
+}
+    @media print{
+        input{
+            font-size: 50px;
+            color:red;
+        }
+        footer {
+    display: none;
+    position: fixed;
+    bottom: 0;
+  }
+  header {
+    display: none;
+    position: fixed;
+    top: 0;
+  }
+
+    }
+    </style>
+</head>
+
+<body class="bg-primary">
+    <div class="container-fluid " id="form">
+
+        <svg id="barcode" jsbarcode-format="upc"
+        jsbarcode-textmargin="0"
+        jsbarcode-fontoptions="bold"></svg>
+    
+    <form action="" class="col-5 mx-auto m-5 " >
+        <input class="form-control m-4" type="text" name="" id="" placeholder="seller">
+        <input class="form-control m-4" type="text" name="" id="" placeholder="customer">
+        <input class="form-control m-4" type="text" name="" id="product" placeholder="product">
+        <input class="form-control m-4" type="text" name="" id="" placeholder="hsn code">
+        <button class=" btn btn-danger" id="barcodeGen">Generate Barcode</button>
+        
+    </form>
+    <button id="print" >Print</button>
+</div>
+<script>
+const submit=document.querySelector("#barcodeGen");
+const print=document.querySelector("#print");
+submit.addEventListener("click",(e)=>{
+e.preventDefault();
+    const value=document.querySelector("#product").value;
+    JsBarcode("#barcode", value);
+});
+
+print.addEventListener("click",()=>{
+    // e.preventDefault();
+    printJS({ printable: 'form', type: 'html', header: 'PrintJS - Form Element Selection',ignoreElements:["product"] ,
+    style:'.container-fluid{border:5px solid red;height:80vw;width:80vw;border-radius:12px;}'
+    });
+})
+</script>
+</body>
+
+</html>
